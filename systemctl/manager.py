@@ -94,7 +94,7 @@ class Manager(object):
         
         @raise SystemdError: Raised when no job is found with the given ID.
         
-        @rtype: systemd.job.Job
+        @rtype: systemctl.job.Job
         """
         try:
             job_path = self.__interface.GetJob(ID)
@@ -126,7 +126,7 @@ class Manager(object):
         
         @raise SystemdError: Raised when no unit with that PID is found.
         
-        @rtype: systemd.unit.Unit
+        @rtype: systemctl.unit.Unit
         """
         try:
             unit_path = self.__interface.GetUnitByPID(pid)
