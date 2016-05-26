@@ -21,21 +21,21 @@ import dbus
 import dbus.mainloop.glib
 dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
 
-from systemd.property import Property
-from systemd.exceptions import SystemdError
+from systemctl.property import Property
+from systemctl.exceptions import SystemdError
 
-class Timer(object):
-    """Abstraction class to org.freedesktop.systemd1.Timer interface"""
-    def __init__(self, unit_path):
+class Job(object):
+    """Abstraction class to org.freedesktop.systemd1.Job interface"""
+    def __init__(self, job_path):
         self.__bus = dbus.SystemBus()
-
         self.__proxy = self.__bus.get_object(
             'org.freedesktop.systemd1',
-            unit_path,)
-
+            job_path,
+        )
         self.__interface = dbus.Interface(
             self.__proxy,
-            'org.freedesktop.systemd1.Timer',)
+            'org.freedesktop.systemd1.Job',
+        )
 
         self.__properties_interface = dbus.Interface(
             self.__proxy,
@@ -57,3 +57,9 @@ class Timer(object):
         for key, value in properties.items():
             setattr(attr_property, key, value)
         setattr(self, 'properties', attr_property)
+
+    def cancel(self):
+        try:
+            self.__interface.Cancel()
+        except dbus.exceptions.DBusException, error:
+            raise SystemdError(error)

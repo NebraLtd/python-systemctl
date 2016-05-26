@@ -21,11 +21,11 @@ import dbus
 import dbus.mainloop.glib
 dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
 
-from systemd.property import Property
-from systemd.exceptions import SystemdError
+from systemctl.property import Property
+from systemctl.exceptions import SystemdError
 
-class Path(object):
-    """Abstraction class to org.freedesktop.systemd1.Path interface"""
+class Automount(object):
+    """Abstraction class to org.freedesktop.systemd1.Automount interface"""
     def __init__(self, unit_path):
         self.__bus = dbus.SystemBus()
 
@@ -35,7 +35,7 @@ class Path(object):
 
         self.__interface = dbus.Interface(
             self.__proxy,
-            'org.freedesktop.systemd1.Path',)
+            'org.freedesktop.systemd1.Automount',)
 
         self.__properties_interface = dbus.Interface(
             self.__proxy,

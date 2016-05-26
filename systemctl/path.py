@@ -21,11 +21,11 @@ import dbus
 import dbus.mainloop.glib
 dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
 
-from systemd.property import Property
-from systemd.exceptions import SystemdError
+from systemctl.property import Property
+from systemctl.exceptions import SystemdError
 
-class Socket(object):
-    """Abstraction class to org.freedesktop.systemd1.Socket interface"""
+class Path(object):
+    """Abstraction class to org.freedesktop.systemd1.Path interface"""
     def __init__(self, unit_path):
         self.__bus = dbus.SystemBus()
 
@@ -35,7 +35,7 @@ class Socket(object):
 
         self.__interface = dbus.Interface(
             self.__proxy,
-            'org.freedesktop.systemd1.Socket',)
+            'org.freedesktop.systemd1.Path',)
 
         self.__properties_interface = dbus.Interface(
             self.__proxy,

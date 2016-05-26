@@ -21,11 +21,11 @@ import dbus
 import dbus.mainloop.glib
 dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
 
-from systemd.property import Property
-from systemd.exceptions import SystemdError
+from systemctl.property import Property
+from systemctl.exceptions import SystemdError
 
-class Swap(object):
-    """Abstraction class to org.freedesktop.systemd1.Swap interface"""
+class Snapshot(object):
+    """Abstraction class to org.freedesktop.systemd1.Snapshot interface"""
     def __init__(self, unit_path):
         self.__bus = dbus.SystemBus()
 
@@ -35,7 +35,7 @@ class Swap(object):
 
         self.__interface = dbus.Interface(
             self.__proxy,
-            'org.freedesktop.systemd1.Swap',)
+            'org.freedesktop.systemd1.Snapshot',)
 
         self.__properties_interface = dbus.Interface(
             self.__proxy,
@@ -57,3 +57,9 @@ class Swap(object):
         for key, value in properties.items():
             setattr(attr_property, key, value)
         setattr(self, 'properties', attr_property)
+
+    def remove(self):
+        try:
+            self.__interface.Remove()
+        except dbus.exceptions.DBusException, error:
+            raise SystemdError(error)

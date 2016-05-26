@@ -21,10 +21,10 @@ import dbus
 import dbus.mainloop.glib
 dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
 
-from systemd.unit import Unit
-from systemd.job import Job
-from systemd.property import Property
-from systemd.exceptions import SystemdError
+from systemctl.unit import Unit
+from systemctl.job import Job
+from systemctl.property import Property
+from systemctl.exceptions import SystemdError
 
 class Manager(object):
     """Abstraction class to org.freedesktop.systemd1.Manager interface"""
@@ -171,7 +171,7 @@ class Manager(object):
         @raise SystemdError, IndexError: Raised when dbus error or index error
         is raised.
         
-        @rtype: A tuple of L{systemd.unit.Job}
+        @rtype: A tuple of L{systemctl.unit.Job}
         """
         try:
             jobs = []
@@ -187,7 +187,7 @@ class Manager(object):
         @raise SystemdError: Raised when dbus error or index error
         is raised.
         
-        @rtype: A tuple of L{systemd.unit.Unit}
+        @rtype: A tuple of L{systemctl.unit.Unit}
         """
         try:
             units = []

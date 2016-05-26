@@ -21,9 +21,9 @@ import dbus
 import dbus.mainloop.glib
 dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
 
-from systemd.property import Property
-from systemd.exceptions import SystemdError
-from systemd.job import Job
+from systemctl.property import Property
+from systemctl.exceptions import SystemdError
+from systemctl.job import Job
 
 class Unit(object):
     """Abstraction class to org.freedesktop.systemd1.Unit interface"""

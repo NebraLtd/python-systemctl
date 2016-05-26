@@ -21,11 +21,11 @@ import dbus
 import dbus.mainloop.glib
 dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
 
-from systemd.property import Property
-from systemd.exceptions import SystemdError
+from systemctl.property import Property
+from systemctl.exceptions import SystemdError
 
-class Service(object):
-    """Abstraction class to org.freedesktop.systemd1.Service interface"""
+class Timer(object):
+    """Abstraction class to org.freedesktop.systemd1.Timer interface"""
     def __init__(self, unit_path):
         self.__bus = dbus.SystemBus()
 
@@ -35,7 +35,7 @@ class Service(object):
 
         self.__interface = dbus.Interface(
             self.__proxy,
-            'org.freedesktop.systemd1.Service',)
+            'org.freedesktop.systemd1.Timer',)
 
         self.__properties_interface = dbus.Interface(
             self.__proxy,

@@ -3,10 +3,10 @@ import unittest
 import signal
 import dbus
 
-from systemd.manager import Manager
-from systemd.exceptions import SystemdError
-from systemd.unit import Unit
-from systemd.job import Job
+from systemctl.manager import Manager
+from systemctl.exceptions import SystemdError
+from systemctl.unit import Unit
+from systemctl.job import Job
 
 class ManagerTest(unittest.TestCase):
 

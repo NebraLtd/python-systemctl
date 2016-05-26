@@ -21,11 +21,11 @@ import dbus
 import dbus.mainloop.glib
 dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
 
-from systemd.property import Property
-from systemd.exceptions import SystemdError
+from systemctl.property import Property
+from systemctl.exceptions import SystemdError
 
-class Snapshot(object):
-    """Abstraction class to org.freedesktop.systemd1.Snapshot interface"""
+class Target(object):
+    """Abstraction class to org.freedesktop.systemd1.Target interface"""
     def __init__(self, unit_path):
         self.__bus = dbus.SystemBus()
 
@@ -35,31 +35,4 @@ class Snapshot(object):
 
         self.__interface = dbus.Interface(
             self.__proxy,
-            'org.freedesktop.systemd1.Snapshot',)
-
-        self.__properties_interface = dbus.Interface(
-            self.__proxy,
-            'org.freedesktop.DBus.Properties')
-
-        self.__properties_interface.connect_to_signal(
-            'PropertiesChanged',
-            self.__on_properties_changed)
-
-        self.__properties()
-
-    def __on_properties_changed(self, *args, **kargs):
-        self.__properties()
-
-    def __properties(self):
-        properties = self.__properties_interface.GetAll(
-            self.__interface.dbus_interface)
-        attr_property =  Property()
-        for key, value in properties.items():
-            setattr(attr_property, key, value)
-        setattr(self, 'properties', attr_property)
-
-    def remove(self):
-        try:
-            self.__interface.Remove()
-        except dbus.exceptions.DBusException, error:
-            raise SystemdError(error)
+            'org.freedesktop.systemd1.Target',)
