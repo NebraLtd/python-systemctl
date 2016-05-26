@@ -25,9 +25,12 @@ from systemd.property import Property
 from systemd.exceptions import SystemdError
 from systemd.job import Job
 
+
 class Unit(object):
     """Abstraction class to org.freedesktop.systemd1.Unit interface"""
     def __init__(self, unit_path):
+        self.__unit_path = unit_path
+
         self.__bus = dbus.SystemBus()
 
         self.__proxy = self.__bus.get_object(
@@ -54,10 +57,14 @@ class Unit(object):
     def __properties(self):
         properties = self.__properties_interface.GetAll(
             self.__interface.dbus_interface)
-        attr_property =  Property()
+        attr_property = Property()
         for key, value in properties.items():
             setattr(attr_property, key, value)
         setattr(self, 'properties', attr_property)
+
+    @property
+    def unit_path(self):
+        return self.__unit_path
 
     def kill(self, who, mode, signal):
         """Kill unit.

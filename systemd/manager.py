@@ -22,6 +22,7 @@ import dbus.mainloop.glib
 dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
 
 from systemd.unit import Unit
+from systemd.service import Service
 from systemd.job import Job
 from systemd.property import Property
 from systemd.exceptions import SystemdError
@@ -103,7 +104,7 @@ class Manager(object):
             raise SystemdError(error)
 
     def get_unit(self, name):
-        """Get unit by it name.
+        """Get unit by its name.
         
         @param name: Unit name (ie: network.service).
         
@@ -119,7 +120,7 @@ class Manager(object):
             raise SystemdError(error)
 
     def get_unit_by_pid(self, pid):
-        """Get unit by it PID.
+        """Get unit by its PID.
         
         @param PID: Unit PID.
         
@@ -131,6 +132,38 @@ class Manager(object):
             unit_path = self.__interface.GetUnitByPID(pid)
             unit = Unit(unit_path)
             return unit
+        except dbus.exceptions.DBusException, error:
+            raise SystemdError(error)
+
+    def get_service(self, name):
+        """Get service by its name.
+
+        @param name: Service name (ie: network.service).
+
+        @raise SystemdError: Raised when no service is found with the given name.
+
+        @rtype: systemd.service.Service
+        """
+        try:
+            unit_path = self.__interface.GetUnit(name)
+            service = Service(unit_path)
+            return service
+        except dbus.exceptions.DBusException, error:
+            raise SystemdError(error)
+
+    def get_service_by_pid(self, pid):
+        """Get service by its PID.
+
+        @param PID: Service PID.
+
+        @raise SystemdError: Raised when no service with that PID is found.
+
+        @rtype: systemd.service.Service
+        """
+        try:
+            unit_path = self.__interface.GetUnitByPID(pid)
+            service = Service(unit_path)
+            return service
         except dbus.exceptions.DBusException, error:
             raise SystemdError(error)
 
