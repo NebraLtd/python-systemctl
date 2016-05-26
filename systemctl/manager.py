@@ -1,14 +1,14 @@
 #
 # Copyright (c) 2010 Mandriva
 #
-# This file is part of python-systemd.
+# This file is part of python-systemctl.
 #
-# python-systemd is free software; you can redistribute it and/or modify
+# python-systemctl is free software; you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as
 # published by the Free Software Foundation; either version 2.1 of
 # the License, or (at your option) any later version.
 #
-# python-systemd is distributed in the hope that it will be useful,
+# python-systemctl is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU Lesser General Public License for more details.
@@ -21,11 +21,11 @@ import dbus
 import dbus.mainloop.glib
 dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
 
-from systemd.unit import Unit
-from systemd.service import Service
-from systemd.job import Job
-from systemd.property import Property
-from systemd.exceptions import SystemdError
+from systemctl.unit import Unit
+from systemctl.service import Service
+from systemctl.job import Job
+from systemctl.property import Property
+from systemctl.exceptions import SystemdError
 
 class Manager(object):
     """Abstraction class to org.freedesktop.systemd1.Manager interface"""
@@ -190,7 +190,7 @@ class Manager(object):
         
         @raise SystemdError: Raised when no unit is found with the given name.
         
-        @rtype: L{systemd.job.Job}
+        @rtype: L{systemctl.job.Job}
         """
         try:
             self.__interface.KillUnit(name, who, mode, signal)
@@ -204,7 +204,7 @@ class Manager(object):
         @raise SystemdError, IndexError: Raised when dbus error or index error
         is raised.
         
-        @rtype: A tuple of L{systemd.unit.Job}
+        @rtype: A tuple of L{systemctl.unit.Job}
         """
         try:
             jobs = []
@@ -220,7 +220,7 @@ class Manager(object):
         @raise SystemdError: Raised when dbus error or index error
         is raised.
         
-        @rtype: A tuple of L{systemd.unit.Unit}
+        @rtype: A tuple of L{systemctl.unit.Unit}
         """
         try:
             units = []
@@ -237,7 +237,7 @@ class Manager(object):
         
         @raise SystemdError: Raised when no unit is found with the given name.
         
-        @rtype: L{systemd.unit.Unit}
+        @rtype: L{systemctl.unit.Unit}
         """
         try:
             unit_path = self.__interface.LoadUnit(name)
@@ -278,7 +278,7 @@ class Manager(object):
         
         @raise SystemdError: Raised when no unit is found with the given name.
         
-        @rtype: L{systemd.job.Job}
+        @rtype: L{systemctl.job.Job}
         """
         try:
             job_path = self.__interface.ReloadOrRestartUnit(name, mode)
@@ -295,7 +295,7 @@ class Manager(object):
         
         @raise SystemdError: Raised when no unit is found with the given name.
         
-        @rtype: L{systemd.job.Job}
+        @rtype: L{systemctl.job.Job}
         """
         try:
             job_path = self.__interface.ReloadOrTryRestartUnit(name, mode)
@@ -313,7 +313,7 @@ class Manager(object):
         @raise SystemdError: Raised when no unit is found with the given name or
         mode is not corret.
         
-        @rtype: L{systemd.job.Job}
+        @rtype: L{systemctl.job.Job}
         """
         try:
             job_path = self.__interface.ReloadUnit(name, mode)
@@ -342,7 +342,7 @@ class Manager(object):
         
         @raise SystemdError: Raised when no unit is found with the given name.
         
-        @rtype: L{systemd.job.Job}
+        @rtype: L{systemctl.job.Job}
         """
         try:
             job_path = self.__interface.RestartUnit(name, mode)
@@ -365,7 +365,7 @@ class Manager(object):
         
         @raise SystemdError: Raised when no unit is found with the given name.
         
-        @rtype: L{systemd.job.Job}
+        @rtype: L{systemctl.job.Job}
         """
         try:
             job_path = self.__interface.StartUnit(name, mode)
@@ -383,7 +383,7 @@ class Manager(object):
         
         @raise SystemdError: Raised when no unit is found with the given name.
         
-        @rtype: L{systemd.job.Job}
+        @rtype: L{systemctl.job.Job}
         """
         try:
             job_path = self.__interface.StartUnitReplace(old_unit, new_unit, mode)
@@ -400,7 +400,7 @@ class Manager(object):
         
         @raise SystemdError: Raised when no unit is found with the given name.
         
-        @rtype: L{systemd.job.Job}
+        @rtype: L{systemctl.job.Job}
         """
         try:
             job_path = self.__interface.StopUnit(name, mode)
@@ -425,7 +425,7 @@ class Manager(object):
         @raise SystemdError: Raised when no unit is found with the given name or
         mode is invalid.
         
-        @rtype: L{systemd.job.Job}
+        @rtype: L{systemctl.job.Job}
         """
         try:
             job_path = self.__interface.TryRestartUnit(name, mode)

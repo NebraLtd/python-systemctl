@@ -1,7 +1,7 @@
 from distutils.core import setup
 import os
 
-from systemd import get_version
+from systemctl import get_version
 
 
 # Compile the list of packages available, because distutils doesn't have
@@ -11,7 +11,7 @@ root_dir = os.path.dirname(__file__)
 if root_dir:
     os.chdir(root_dir)
 
-for dirpath, dirnames, filenames in os.walk('systemd'):
+for dirpath, dirnames, filenames in os.walk('systemctl'):
     # Ignore dirnames that start with '.'
     for i, dirname in enumerate(dirnames):
         if dirname.startswith('.'): del dirnames[i]
@@ -21,26 +21,26 @@ for dirpath, dirnames, filenames in os.walk('systemd'):
             pkg = pkg.replace(os.path.altsep, '.')
         packages.append(pkg)
     elif filenames:
-        prefix = dirpath[13:] # Strip "systemd/" or "systemd\"
+        prefix = dirpath[15:]  # Strip "systemctl/" or "systemctl\"
         for f in filenames:
             data_files.append(os.path.join(prefix, f))
 
 
-setup(name='python-systemd',
+setup(name='python-systemctl',
       version=get_version().replace(' ', '-'),
       description='Systemd interfaces wrapper',
       author='Wiliam Souza',
       author_email='wiliam@mandriva.com',
       url='',
       download_url='',
-      package_dir={'systemd': 'systemd'},
+      package_dir={'systemctl': 'systemctl'},
       packages=packages,
-      package_data={'systemd': data_files},
+      package_data={'systemctl': data_files},
       classifiers=['Development Status :: 1 - Planning',
                    'Intended Audience :: Developers',
                    'License :: ',
-		   'Operating System :: POSIX :: Linux',
+                   'Operating System :: POSIX :: Linux',
                    'Programming Language :: Python',
-                   'Topic :: Libraries :: Python Modules',]
+                   'Topic :: Libraries :: Python Modules']
       )
 

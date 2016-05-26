@@ -12,7 +12,7 @@ Basic usage
 Import and create a `manager`:
 
 ```
->>> from systemd.manager import Manager
+>>> from systemctl.manager import Manager
 >>> manager = Manager()
 ```
 

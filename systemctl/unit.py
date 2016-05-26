@@ -1,14 +1,14 @@
 #
 # Copyright (c) 2010 Mandriva
 #
-# This file is part of python-systemd.
+# This file is part of python-systemctl.
 #
-# python-systemd is free software; you can redistribute it and/or modify
+# python-systemctl is free software; you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as
 # published by the Free Software Foundation; either version 2.1 of
 # the License, or (at your option) any later version.
 #
-# python-systemd is distributed in the hope that it will be useful,
+# python-systemctl is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU Lesser General Public License for more details.
@@ -21,9 +21,9 @@ import dbus
 import dbus.mainloop.glib
 dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
 
-from systemd.property import Property
-from systemd.exceptions import SystemdError
-from systemd.job import Job
+from systemctl.property import Property
+from systemctl.exceptions import SystemdError
+from systemctl.job import Job
 
 
 class Unit(object):
@@ -195,7 +195,7 @@ class Unit(object):
         
         @raise SystemdError: Raised when mode is invalid.
         
-        @rtype: L{systemd.job.Job}
+        @rtype: L{systemctl.job.Job}
         """
         try:
             job_path = self.__interface.TryRestart(mode)
