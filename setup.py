@@ -21,12 +21,12 @@ for dirpath, dirnames, filenames in os.walk('systemctl'):
             pkg = pkg.replace(os.path.altsep, '.')
         packages.append(pkg)
     elif filenames:
-        prefix = dirpath[13:]  # Strip "systemctl/" or "systemctl\"
+        prefix = dirpath[15:]  # Strip "systemctl/" or "systemctl\"
         for f in filenames:
             data_files.append(os.path.join(prefix, f))
 
 
-setup(name='python-systemd',
+setup(name='python-systemctl',
       version=get_version().replace(' ', '-'),
       description='Systemd interfaces wrapper',
       author='Wiliam Souza',
