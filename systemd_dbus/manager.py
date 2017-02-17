@@ -167,6 +167,38 @@ class Manager(object):
         except dbus.exceptions.DBusException as error:
             raise SystemdError(error)
 
+    def get_service(self, name):
+        """Get service by its name.
+
+        @param name: Service name (ie: network.service).
+
+        @raise SystemdError: Raised when no service is found with the given name.
+
+        @rtype: systemd.service.Service
+        """
+        try:
+            unit_path = self.__interface.GetUnit(name)
+            service = Service(unit_path)
+            return service
+        except dbus.exceptions.DBusException as error:
+            raise SystemdError(error)
+
+    def get_service_by_pid(self, pid):
+        """Get service by its PID.
+
+        @param PID: Service PID.
+
+        @raise SystemdError: Raised when no service with that PID is found.
+
+        @rtype: systemd.service.Service
+        """
+        try:
+            unit_path = self.__interface.GetUnitByPID(pid)
+            service = Service(unit_path)
+            return service
+        except dbus.exceptions.DBusException as error:
+            raise SystemdError(error)
+
     def halt(self):
         try:
             self.__interface.Halt()

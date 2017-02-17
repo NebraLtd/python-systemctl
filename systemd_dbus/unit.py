@@ -26,6 +26,7 @@ from systemd_dbus.exceptions import SystemdError
 from systemd_dbus.job import Job
 
 
+
 class Unit(object):
     """Abstraction class to org.freedesktop.systemd1.Unit interface"""
     def __init__(self, unit_path):
