@@ -148,7 +148,7 @@ class Manager(object):
             unit_path = self.__interface.GetUnit(name)
             service = Service(unit_path)
             return service
-        except dbus.exceptions.DBusException, error:
+        except dbus.exceptions.DBusException as error:
             raise SystemdError(error)
 
     def get_service_by_pid(self, pid):
@@ -164,7 +164,7 @@ class Manager(object):
             unit_path = self.__interface.GetUnitByPID(pid)
             service = Service(unit_path)
             return service
-        except dbus.exceptions.DBusException, error:
+        except dbus.exceptions.DBusException as error:
             raise SystemdError(error)
 
     def halt(self):
